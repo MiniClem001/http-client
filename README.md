@@ -56,7 +56,7 @@ To run the client, use the following command:
 Currently only send the GET request to `127.0.0.1:8080`.
 Can be changed in the client.c file.
 
-## Improvements
+## Future improvements
 
 - Take arguments for the ip address & port
 - Include DNS resolver
