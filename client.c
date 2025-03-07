@@ -42,7 +42,7 @@ int main(void)
 
     printf("Connected to %s:%d\n", IP_ADDR, PORT);
 
-    char mess[] = "GET /";
+    char mess[] = "GET / HTTP/1.1\r\nHost: 127.0.0.1:8080\r\nConnection: close\r\n\r\n";
     char buff[BUFF_SIZE] = {0};
 
     if (send(sockfd, mess, sizeof(mess), 0) == -1)
@@ -51,10 +51,27 @@ int main(void)
         exit(EXIT_FAILURE);
     }
 
-    // to do
-    if (recv(sockfd, buff, ))
+    ssize_t bytes_received;
 
-        close(sockfd);
+    while ((bytes_received = recv(sockfd, buff, sizeof(BUFF_SIZE) - 1, 0)) > 0)
+    {
+        // null terminate the received data
+        buff[bytes_received] = '\0';
+
+        // print the received data
+        printf("%s", buff);
+
+        // clear the buffer for next read
+        memset(buff, 0, sizeof(buff));
+    }
+
+    if (bytes_received == -1)
+    {
+        perror(strerror(errno));
+        exit(EXIT_FAILURE);
+    }
+
+    close(sockfd);
 
     exit(EXIT_SUCCESS);
 }
