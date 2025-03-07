@@ -18,7 +18,7 @@ int main(void)
 
     if (sockfd < 0)
     {
-        printf("Error creating the socker!\n");
+        perror("Error creating the socket!");
         exit(EXIT_FAILURE);
     }
 
@@ -29,14 +29,14 @@ int main(void)
     address.sin_port = htons(PORT);
     if (inet_pton(AF_INET, IP_ADDR, &address.sin_addr) != 1)
     {
-        printf("IP Address invalid!\n");
+        perror("IP Address invalid!");
         exit(EXIT_FAILURE);
     }
 
     // connecting to the socket
     if (connect(sockfd, (struct sockaddr *)&address, sizeof(address)) < 0)
     {
-        perror(strerror(errno));
+        perror("Connection error!");
         exit(EXIT_FAILURE);
     }
 
@@ -47,12 +47,11 @@ int main(void)
 
     if (send(sockfd, mess, strlen(mess), 0) == -1)
     {
-        perror(strerror(errno));
+        perror("Error sending the message!");
         exit(EXIT_FAILURE);
     }
 
     ssize_t bytes_received;
-
     while ((bytes_received = recv(sockfd, buff, sizeof(buff) - 1, 0)) > 0)
     {
         // null terminate the received data
@@ -67,7 +66,7 @@ int main(void)
 
     if (bytes_received == -1)
     {
-        perror(strerror(errno));
+        perror("Error receiving the message!");
         exit(EXIT_FAILURE);
     }
 
