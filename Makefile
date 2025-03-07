@@ -1,9 +1,10 @@
 CC = gcc
-CFLAGS = -Wall -Wextra # -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 SRC = client.c
-OBJ = build/client.o
-TARGET = build/client
+OBJ = $(BUILD)client.o
+TARGET = $(BUILD)client
+BUILD = build/
 
 all: $(TARGET)
 	$(TARGET)
@@ -11,7 +12,13 @@ all: $(TARGET)
 $(TARGET): $(OBJ)
 	$(CC) $(CFLAGS) $< -o $@
 
-$(OBJ): $(SRC)
+$(OBJ): $(SRC) $(BUILD)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-.PHONY: all
+$(BUILD):
+	@[ -d "build/" ] || mkdir -p build/
+
+clean:
+	rm -rf $(BUILD)
+
+.PHONY: all clean
