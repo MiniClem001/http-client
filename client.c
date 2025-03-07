@@ -45,7 +45,7 @@ int main(void)
     char mess[] = "GET / HTTP/1.1\r\nHost: 127.0.0.1:8080\r\nConnection: close\r\n\r\n";
     char buff[BUFF_SIZE] = {0};
 
-    if (send(sockfd, mess, sizeof(mess), 0) == -1)
+    if (send(sockfd, mess, strlen(mess), 0) == -1)
     {
         perror(strerror(errno));
         exit(EXIT_FAILURE);
@@ -53,7 +53,7 @@ int main(void)
 
     ssize_t bytes_received;
 
-    while ((bytes_received = recv(sockfd, buff, sizeof(BUFF_SIZE) - 1, 0)) > 0)
+    while ((bytes_received = recv(sockfd, buff, sizeof(buff) - 1, 0)) > 0)
     {
         // null terminate the received data
         buff[bytes_received] = '\0';
