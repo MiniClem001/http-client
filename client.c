@@ -1,3 +1,9 @@
+/*
+ * Project Description: This program creates a TCP socket and connects to a server at a specified IP address and port.
+ * It sends a simple HTTP GET request and prints the response received from the server.
+ * Author: Clément Giraud-Sauveur
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/socket.h>
