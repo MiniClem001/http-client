@@ -9,6 +9,7 @@
 
 #define PORT 8080
 #define IP_ADDR "127.0.0.1"
+#define BUFF_SIZE 1024
 
 int main(void)
 {
@@ -23,6 +24,7 @@ int main(void)
 
     // defining the address and port
     struct sockaddr_in address;
+    memset(&address, 0, sizeof(address));
     address.sin_family = AF_INET;
     address.sin_port = htons(PORT);
     if (inet_pton(AF_INET, IP_ADDR, &address.sin_addr) != 1)
@@ -40,7 +42,19 @@ int main(void)
 
     printf("Connected to %s:%d\n", IP_ADDR, PORT);
 
-    close(sockfd);
+    char mess[] = "GET /";
+    char buff[BUFF_SIZE] = {0};
+
+    if (send(sockfd, mess, sizeof(mess), 0) == -1)
+    {
+        perror(strerror(errno));
+        exit(EXIT_FAILURE);
+    }
+
+    // to do
+    if (recv(sockfd, buff, ))
+
+        close(sockfd);
 
     exit(EXIT_SUCCESS);
 }
